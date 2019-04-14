@@ -1,8 +1,0 @@
-app:
-  image: jho4us/tc-frontend:latest
-  restart: always
-  ports:
-    - "3000:3000"
-  environment:
-    - ROOT_URL=http://localhost:3000
-
