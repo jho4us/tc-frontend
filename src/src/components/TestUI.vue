@@ -1,6 +1,15 @@
 <template>
   <div>
     <h1>Редактирование теста</h1>
+    <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="dismissCountDown"
+      @dismiss-count-down="countDownChanged"
+    >
+      {{alertContents}}
+    </b-alert>
     <b-form @submit.prevent>
       <b-form-group class="mt-3" label="Название теста:">
         <b-form-input
@@ -43,7 +52,9 @@
     data () {
       return {
         name: '',
-        content: ''
+        content: '',
+        dismissCountDown: 0,
+        alertContents: ''
       }
     },
     computed: {
@@ -67,7 +78,7 @@
             this.content = t.content
           }
         }).catch(error => {
-          console.error(error)
+          this.showAlert(error)
         })
       },
       save () {
@@ -82,8 +93,16 @@
         promise.then((data) => {
           this.$router.push({ name: 'tests' })
         }).catch(error => {
-          console.error(error)
+          this.showAlert(error)
         })
+      },
+      showAlert (e) {
+        console.error(e)
+        this.alertContents = e.toString()
+        this.dismissCountDown = 15
+      },
+      countDownChanged (dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
       }
     }
   }

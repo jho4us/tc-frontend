@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM debian:stretch-slim
 
 RUN apt-get update && apt-get install -y \
     nginx \
@@ -11,6 +11,6 @@ COPY startup.sh /home/
 RUN chmod 777 /home/startup.sh
 CMD ["bash","/home/startup.sh"]
 
-EXPOSE 9000
+EXPOSE 3000
 
 COPY src/dist /home/html/

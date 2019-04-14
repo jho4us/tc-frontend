@@ -1,5 +1,15 @@
 <template>
   <div>
+    <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="dismissCountDown"
+      @dismiss-count-down="countDownChanged"
+    >
+      {{alertContents}}
+    </b-alert>
+
     <b-form @submit.prevent @reset="onReset" v-if="show">
       <b-input-group class="mt-3">
         <b-form-input
@@ -79,6 +89,8 @@
       return {
         name: '',
         show: true,
+        dismissCountDown: 0,
+        alertContents: '',
         isBusy: false,
         totalRows: 0,
         currentPage: 1,
@@ -133,7 +145,7 @@
           }
           return (items)
         }).catch(error => {
-          console.error(error)
+          this.showAlert(error)
           this.isBusy = false
           // Returning an empty array, allows table to correctly handle
           // internal busy state in case of error
@@ -151,7 +163,7 @@
         return promise.then((data) => {
           this.$router.push({ path: `/test/${data.data.id}` })
         }).catch(error => {
-          console.error(error)
+          this.showAlert(error)
         })
       },
       deleteTest (row) {
@@ -179,12 +191,20 @@
           return HTTP.delete(`/tc/v1/tests/${row.item.id}`).then((data) => {
             self.refresh()
           }).catch(error => {
-            console.error(error)
+            self.showAlert(error)
             self.refresh()
           })
         }, (err) => {
           err = null
         })
+      },
+      showAlert (e) {
+        console.error(e)
+        this.alertContents = e.toString()
+        this.dismissCountDown = 15
+      },
+      countDownChanged (dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
       }
     }
   }
