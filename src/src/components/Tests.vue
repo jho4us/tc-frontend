@@ -82,7 +82,7 @@
         isBusy: false,
         totalRows: 0,
         currentPage: 1,
-        perPage: 20,
+        perPage: 5,
         fields: {
           name: {
             sortable: true,
