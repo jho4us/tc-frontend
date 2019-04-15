@@ -4,6 +4,8 @@
 ## Description: Script for bundling, building & deploying a web app with Docker
 
 set -e
+BASEDIR=$(dirname "$0")
+pushd $BASEDIR
 
 REBUILD=true
 
@@ -92,3 +94,4 @@ ENDTIME=`date +%s.%N`
 TIMEDIFF=`echo "$ENDTIME - $STARTTIME" | bc | awk -F"." '{print $1"."substr($2,1,3)}'`
 
 echo "Time elapsed: $TIMEDIFF"
+popd
