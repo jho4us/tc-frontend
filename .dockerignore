@@ -1,0 +1,13 @@
+.git
+Dockerfile
+.DS_Store
+.gitignore
+README.md
+env.*
+devops
+*.csv
+tmp
+node_modules
+test
+idea
+dist

@@ -65,23 +65,6 @@ echo "Start building container ${DOCKER_TAG} ..."
 # Start Timestamp
 STARTTIME=`date +%s.%N`
 
-if [ "$REBUILD" = true ] || [ ! "$(ls -A $BUILD_DIR)" ]; then
-
-    pushd src
-    echo "Building webpack bundle to $BUILD_DIR"
-
-    # clean old build if exist
-    rm -rf $BUILD_DIR
-    mkdir -p $BUILD_DIR
-    # install node packages
-    npm i 
-    # build app
-    npm run build
-    popd
-else
-    echo "REUSE OLD BUILD.."
-fi &&
-
 # build container
 docker build --rm -t ${DOCKER_TAG} . &&
 
